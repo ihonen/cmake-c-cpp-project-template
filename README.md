@@ -57,29 +57,30 @@ Put all testing-related code here.
 1. Configure the project by running CMake:
 
 ```
-cmake -B build -S . -DCMAKE_BUILD_TYPE=Debug
+cmake -B .build -S . -DCMAKE_BUILD_TYPE=Debug
 ```
 
-2. Build the project (in parallel for faster building):
+2. Build the project:
 
 ```
-cmake --build build --parallel `nproc`
+cmake --build .build --parallel `nproc`
 ```
 
 3. Run the executable:
 
 ```
-./build/Debug/bin/myproject
+.build/bin/myproject
 ```
+
+Alternatively, you can just run `make` in this directory and all of the above
+will be done automatically.
 
 ## Extra Features
 
 * This template automatically enables static analysis of C and C++ code with Cppcheck
   * The configuration may not suit you perfectly, so keep that in mind
-* This template enables testing with CMake's integrated CTest tool
+* This template enables testing with CTest (CMake's integrated testing tool), although no test code is included
 
 ## Limitations
 
-I'm not as familiar with Clang and MSVC as I am with GCC, so this project only fully supports GCC.
-
-However, it should be easy enough to customize the compiler-specific bits for your preferred compiler.
+This project assumes that you will be using either GCC or Clang on Linux as that is the platform I prefer to work on.
