@@ -1,5 +1,5 @@
-CC  ?= clang
-CXX ?= clang++
+CC  ?= gcc
+CXX ?= g++
 
 SRC_DIR   := .
 BUILD_DIR := .build

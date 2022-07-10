@@ -3,30 +3,50 @@ set(CMAKE_C_CPPCHECK ${CMAKE_CXX_CPPCHECK})
 
 # ------------------------------------------------------------------------------
 
+set(CPPCHECK_FLAGS_COMMON
+    -I${CMAKE_SOURCE_DIR}/include
+    --platform=native
+    --enable=style,performance,portability
+    --suppress=missingIncludeSystem
+    --inline-suppr
+    --inconclusive
+    --force
+)
+
+if ("${CMAKE_BUILD_TYPE}" STREQUAL "Release"
+    OR "${CMAKE_BUILD_TYPE}" STREQUAL "MinSizeRel")
+
+    list(APPEND CPPCHECK_FLAGS_COMMON
+        --error-exitcode=1
+    )
+
+endif ()
+
+file(GLOB_RECURSE CPPCHECK_CXX_FILES
+    "${CMAKE_SOURCE_DIR}/src/*.cc"
+    "${CMAKE_SOURCE_DIR}/src/*.cpp"
+    "${CMAKE_SOURCE_DIR}/src/*.cxx"
+    "${CMAKE_SOURCE_DIR}/src/*.c++"
+    "${CMAKE_SOURCE_DIR}/src/*.tcc"
+    "${CMAKE_SOURCE_DIR}/src/*.tpp"
+    "${CMAKE_SOURCE_DIR}/src/*.txx"
+)
+
+file(GLOB_RECURSE CPPCHECK_C_FILES
+    "${CMAKE_SOURCE_DIR}/src/*.c"
+)
+
+# ------------------------------------------------------------------------------
+
 if (CMAKE_CXX_CPPCHECK)
-    file(GLOB_RECURSE MYPROJECT_CPPCHECK_CXX_FILES
-        "${CMAKE_SOURCE_DIR}/src/*.cc"
-        "${CMAKE_SOURCE_DIR}/src/*.cpp"
-        "${CMAKE_SOURCE_DIR}/src/*.cxx"
-        "${CMAKE_SOURCE_DIR}/src/*.c++"
-        "${CMAKE_SOURCE_DIR}/src/*.tcc"
-        "${CMAKE_SOURCE_DIR}/src/*.tpp"
-        "${CMAKE_SOURCE_DIR}/src/*.txx"
+
+    list(APPEND CMAKE_CXX_CPPCHECK
+        ${MYPROJECT_CPPCHECK_CXX_FILES}
+        ${CPPCHECK_FLAGS_COMMON}
+        --std=c++${CMAKE_CXX_STANDARD}
+        --cppcheck-build-dir=${CMAKE_BINARY_DIR}/cppcheck/cxx
     )
-    list(
-        APPEND CMAKE_CXX_CPPCHECK
-            "${MYPROJECT_CPPCHECK_CXX_FILES}"
-            "--cppcheck-build-dir=${CMAKE_BINARY_DIR}/cppcheck/cxx"
-            "--error-exitcode=1"
-            "--enable=style,performance,portability"
-            "--std=c++${CMAKE_CXX_STANDARD}"
-            "--inconclusive"
-            "--force"
-            "--inline-suppr"
-            "--platform=native"
-            "--suppress=missingIncludeSystem"
-            "-I${CMAKE_SOURCE_DIR}/include"
-    )
+
 endif()
 
 # ------------------------------------------------------------------------------
@@ -37,16 +57,9 @@ if (CMAKE_C_CPPCHECK)
     )
     list(
         APPEND CMAKE_C_CPPCHECK
-            "${MYPROJECT_CPPCHECK_C_FILES}"
-            "--cppcheck-build-dir=${CMAKE_BINARY_DIR}/cppcheck/c"
-            "--error-exitcode=1"
-            "--enable=style,performance,portability"
-            "--std=c${CMAKE_C_STANDARD}"
-            "--inconclusive"
-            "--force"
-            "--inline-suppr"
-            "--platform=native"
-            "--suppress=missingIncludeSystem"
-            "-I${CMAKE_SOURCE_DIR}/include"
+            ${MYPROJECT_CPPCHECK_C_FILES}
+            ${CPPCHECK_FLAGS_COMMON}
+            --std=c${CMAKE_C_STANDARD}
+            --cppcheck-build-dir=${CMAKE_BINARY_DIR}/cppcheck/c
     )
 endif ()

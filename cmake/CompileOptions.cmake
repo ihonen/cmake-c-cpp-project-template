@@ -26,10 +26,47 @@ string(TOUPPER ${CMAKE_BUILD_TYPE} CMAKE_BUILD_TYPE_UPPERCASE)
 if (CMAKE_C_COMPILER_ID STREQUAL "GNU"
     OR CMAKE_C_COMPILER_ID STREQUAL "Clang")
 
-    string(STRIP "-Og -g -Wall -Wextra -pedantic $ENV{CFLAGS}" CMAKE_C_FLAGS_DEBUG)
-    string(STRIP "-O2 -g -p -Wall -Wextra -pedantic $ENV{CFLAGS}" CMAKE_C_FLAGS_PROFILE)
-    string(STRIP "-O2 -Wall -Wextra -Werror -pedantic $ENV{CFLAGS}" CMAKE_C_FLAGS_RELEASE)
-    string(STRIP "-Os -Wall -Wextra -Werror -pedantic $ENV{CFLAGS}" CMAKE_C_FLAGS_MINSIZEREL)
+    set(C_FLAGS_COMMON
+        -pedantic
+        -Wall
+        -Wextra
+        -Werror
+    )
+
+    set(CMAKE_C_FLAGS_DEBUG
+        -Og
+        -g
+        ${C_FLAGS_COMMON}
+        -Wno-error=unused-function
+        -Wno-error=unused-parameter
+        -Wno-error=unused-variable
+    )
+
+    set(CMAKE_C_FLAGS_PROFILE
+        -O2
+        -p
+        -g
+        ${C_FLAGS_COMMON}
+        -Wno-error=unused-function
+        -Wno-error=unused-parameter
+        -Wno-error=unused-variable
+    )
+
+    set(CMAKE_C_FLAGS_RELEASE
+        -O2
+        ${C_FLAGS_COMMON}
+    )
+
+    set(CMAKE_C_FLAGS_MINSIZEREL
+        -Os
+        ${C_FLAGS_COMMON}
+    )
+
+    # Convert list -> string.
+    string(REPLACE ";" " " CMAKE_C_FLAGS_DEBUG      "${CMAKE_C_FLAGS_DEBUG}")
+    string(REPLACE ";" " " CMAKE_C_FLAGS_PROFILE    "${CMAKE_C_FLAGS_PROFILE}")
+    string(REPLACE ";" " " CMAKE_C_FLAGS_RELEASE    "${CMAKE_C_FLAGS_RELEASE}")
+    string(REPLACE ";" " " CMAKE_C_FLAGS_MINSIZEREL "${CMAKE_C_FLAGS_MINSIZEREL}")
 
 else ()
 
@@ -40,10 +77,47 @@ endif()
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU"
     OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
 
-    string(STRIP "-Og -g -Wall -Wextra -pedantic $ENV{CXXFLAGS}" CMAKE_CXX_FLAGS_DEBUG)
-    string(STRIP "-O2 -g -p -Wall -Wextra -pedantic $ENV{CXXFLAGS}" CMAKE_CXX_FLAGS_PROFILE)
-    string(STRIP "-O2 -Wall -Wextra -Werror -pedantic $ENV{CXXFLAGS}" CMAKE_CXX_FLAGS_RELEASE)
-    string(STRIP "-Os -Wall -Wextra -Werror -pedantic $ENV{CXXFLAGS}" CMAKE_CXX_FLAGS_MINSIZEREL)
+    set(CXX_FLAGS_COMMON
+        -pedantic
+        -Wall
+        -Wextra
+        -Werror
+    )
+
+    set(CMAKE_CXX_FLAGS_DEBUG
+        -Og
+        -g
+        ${CXX_FLAGS_COMMON}
+        -Wno-error=unused-function
+        -Wno-error=unused-parameter
+        -Wno-error=unused-variable
+    )
+
+    set(CMAKE_CXX_FLAGS_PROFILE
+        -O2
+        -p
+        -g
+        ${CXX_FLAGS_COMMON}
+        -Wno-error=unused-function
+        -Wno-error=unused-parameter
+        -Wno-error=unused-variable
+    )
+
+    set(CMAKE_CXX_FLAGS_RELEASE
+        -O2
+        ${CXX_FLAGS_COMMON}
+    )
+
+    set(CMAKE_CXX_FLAGS_MINSIZEREL
+        -Os
+        ${CXX_FLAGS_COMMON}
+    )
+
+    # Convert list -> string.
+    string(REPLACE ";" " " CMAKE_CXX_FLAGS_DEBUG      "${CMAKE_CXX_FLAGS_DEBUG}")
+    string(REPLACE ";" " " CMAKE_CXX_FLAGS_PROFILE    "${CMAKE_CXX_FLAGS_PROFILE}")
+    string(REPLACE ";" " " CMAKE_CXX_FLAGS_RELEASE    "${CMAKE_CXX_FLAGS_RELEASE}")
+    string(REPLACE ";" " " CMAKE_CXX_FLAGS_MINSIZEREL "${CMAKE_CXX_FLAGS_MINSIZEREL}")
 
 else ()
 
