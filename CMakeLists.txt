@@ -6,14 +6,9 @@ project(myproject)
 
 # ------------------------------------------------------------------------------
 
+include(cmake/BuildDir.cmake)
 include(cmake/CompileOptions.cmake)
 include(cmake/Cppcheck.cmake)
-
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-
-set(MYPROJECT_EXEC_PATH ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/myproject)
 
 # ------------------------------------------------------------------------------
 
@@ -67,9 +62,4 @@ print_msg("")
 # ------------------------------------------------------------------------------
 
 add_subdirectory(src)
-
-# ------------------------------------------------------------------------------
-
-include(CTest)
-enable_testing()
 add_subdirectory(test)

@@ -13,6 +13,7 @@ set(CPPCHECK_FLAGS_COMMON
     --force
 )
 
+# Stricter options for release builds.
 if ("${CMAKE_BUILD_TYPE}" STREQUAL "Release"
     OR "${CMAKE_BUILD_TYPE}" STREQUAL "MinSizeRel")
 
@@ -41,7 +42,7 @@ file(GLOB_RECURSE CPPCHECK_C_FILES
 if (CMAKE_CXX_CPPCHECK)
 
     list(APPEND CMAKE_CXX_CPPCHECK
-        ${MYPROJECT_CPPCHECK_CXX_FILES}
+        ${CPPCHECK_CXX_FILES}
         ${CPPCHECK_FLAGS_COMMON}
         --std=c++${CMAKE_CXX_STANDARD}
         --cppcheck-build-dir=${CMAKE_BINARY_DIR}/cppcheck/cxx
@@ -52,14 +53,12 @@ endif()
 # ------------------------------------------------------------------------------
 
 if (CMAKE_C_CPPCHECK)
-    file(GLOB_RECURSE MYPROJECT_CPPCHECK_C_FILES
-        "${CMAKE_SOURCE_DIR}/src/*.c"
+
+    list(APPEND CMAKE_C_CPPCHECK
+        ${CPPCHECK_C_FILES}
+        ${CPPCHECK_FLAGS_COMMON}
+        --std=c${CMAKE_C_STANDARD}
+        --cppcheck-build-dir=${CMAKE_BINARY_DIR}/cppcheck/c
     )
-    list(
-        APPEND CMAKE_C_CPPCHECK
-            ${MYPROJECT_CPPCHECK_C_FILES}
-            ${CPPCHECK_FLAGS_COMMON}
-            --std=c${CMAKE_C_STANDARD}
-            --cppcheck-build-dir=${CMAKE_BINARY_DIR}/cppcheck/c
-    )
+
 endif ()

@@ -1,5 +1,7 @@
 if (NOT WIN32)
+
     string(ASCII 27 ANSI_ESC)
+
     set(ANSI_RESET         "${ANSI_ESC}[m")
     set(ANSI_BOLD          "${ANSI_ESC}[1m")
     set(ANSI_RED           "${ANSI_ESC}[31m")
@@ -16,7 +18,8 @@ if (NOT WIN32)
     set(ANSI_BOLD_MAGENTA  "${ANSI_ESC}[1;35m")
     set(ANSI_BOLD_CYAN     "${ANSI_ESC}[1;36m")
     set(ANSI_BOLD_WHITE    "${ANSI_ESC}[1;37m")
-endif()
+
+endif ()
 
 # ------------------------------------------------------------------------------
 
