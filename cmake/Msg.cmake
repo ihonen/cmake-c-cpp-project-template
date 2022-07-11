@@ -23,7 +23,7 @@ endif ()
 
 # ------------------------------------------------------------------------------
 
-function(print_msg MESSAGE)
+function(msg MESSAGE)
 
     if ("${MESSAGE}" STREQUAL "")
         message(STATUS "")
