@@ -25,10 +25,10 @@ endif ()
 
 function(msg MESSAGE)
 
-    if ("${MESSAGE}" STREQUAL "")
+    if (MESSAGE STREQUAL "")
         message(STATUS "")
     else ()
-        message(STATUS "<myproject> ${ANSI_BOLD}${MESSAGE}${ANSI_RESET}")
+        message(STATUS "<myproject> ${ANSI_BOsLD}${MESSAGE}${ANSI_RESET}")
     endif ()
 
 endfunction ()

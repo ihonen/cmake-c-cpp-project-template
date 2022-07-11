@@ -6,7 +6,7 @@ project(myproject)
 
 # ------------------------------------------------------------------------------
 
-include(${CMAKE_SOURCE_DIR}/cmake/Print.cmake)
+include(${CMAKE_SOURCE_DIR}/cmake/Ansi.cmake)
 
 # ------------------------------------------------------------------------------
 # Build directory
