@@ -1,10 +1,12 @@
-CC  ?= gcc
-CXX ?= g++
+CC        ?= clang
+CXX       ?= clang++
 
 SRC_DIR   := .
 BUILD_DIR := .build
 BIN_DIR   := $(BUILD_DIR)/bin
 LIB_DIR   := $(BUILD_DIR)/lib
+
+CMAKE_GEN ?= "Ninja"
 
 # ------------------------------------------------------------------------------
 
@@ -15,7 +17,7 @@ all: run
 
 .PHONY: configure
 configure:
-	cmake -B $(BUILD_DIR) -S $(SRC_DIR)
+	cmake -B $(BUILD_DIR) -S $(SRC_DIR) -G $(CMAKE_GEN)
 
 .PHONY: build
 build: configure
