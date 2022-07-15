@@ -10,25 +10,28 @@ CMAKE_GEN ?= "Ninja"
 
 # ------------------------------------------------------------------------------
 
-.PHONY: all
 all: run
+.PHONY: all
 
 # ------------------------------------------------------------------------------
 
-.PHONY: configure
 configure:
-	cmake -B $(BUILD_DIR) -S $(SRC_DIR) -G $(CMAKE_GEN)
+	CC=$(CC) CXX=$(CXX) cmake -B $(BUILD_DIR) -S $(SRC_DIR) -G $(CMAKE_GEN)
+.PHONY: configure
 
-.PHONY: build
 build: configure
 	cmake --build $(BUILD_DIR) --parallel `nproc`
+.PHONY: build
 
-.PHONY: run
 run: build
 	$(BIN_DIR)/myproject
+.PHONY: run
 
-.PHONY: clean
 clean:
 	rm -f `find $(BUILD_DIR) -name *.o`
 	rm -rf $(BIN_DIR)/*
 	rm -rf $(LIB_DIR)/*
+.PHONY: clean
+
+hard-clean:
+	rm -rf $(BUILD_DIR)
